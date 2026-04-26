@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Aluno - Mackenzie</title>
+    <meta name="description"
+        content="Acesse sua área de estudante Mackenzie. TIA, carteirinha e informações acadêmicas.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Mobile App Settings -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#CC0000">
+    <link rel="apple-touch-icon" href="icon.jpg">
+    <link rel="icon" type="image/jpeg" href="icon.jpg">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <!-- COLOQUE SUA LOGO AQUI (Ex: <img src="sua-logo.png">) -->
+            <img src="https://www.mackenzie.br/fileadmin/CONFIGURACOES/DEFAULT_21/Resources/Public/Template/img/logo/universidade_mack_v2.svg"
+                alt="Mackenzie Logo" style="height: 50px;">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://www.mackenzie.br/universidade/processos-e-controle-academico/informacoes-ao-aluno/fale-conosco"
+                        target="_blank">Ajuda</a></li>
+                <li><a href="https://www.mackenzie.br/universidade/processos-e-controle-academico/informacoes-ao-aluno/fale-conosco"
+                        target="_blank">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Login Form -->
+        <div class="login-container" id="loginContainer">
+            <h2>Área do Aluno</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" placeholder="Digite seu usuário" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder=" senha" required>
+                </div>
+                <button type="submit" class="btn-login">Acessar</button>
+                <a href="https://www.mackenzie.br/gerti/tutoriais/administrador-email" target="_blank"
+                    class="forgot-password">Esqueceu sua senha?</a>
+            </form>
+        </div>
+
+        <!-- Dashboard (Hidden by default) -->
+        <div class="dashboard-container" id="dashboardContainer" style="display: none;">
+            <h2>Portal do Aluno</h2>
+            <p class="maintenance-alert">Aviso: O site está passando por manutenção e algumas funções podem apresentar instabilidade.</p>
+            <div class="dashboard-list">
+                <div class="list-item" onclick="showSectionContent('aulas')">
+                    <div class="item-content">
+                        <span class="item-text">Setor de Aulas</span>
+                    </div>
+                    <span class="item-arrow">›</span>
+                </div>
+                <div class="list-item" onclick="showSectionContent('atendimento')">
+                    <div class="item-content">
+                        <span class="item-text">Atendimento</span>
+                    </div>
+                    <span class="item-arrow">›</span>
+                </div>
+                <div class="list-item" onclick="showSectionContent('polo')">
+                    <div class="item-content">
+                        <span class="item-text">Polo Físico</span>
+                    </div>
+                    <span class="item-arrow">›</span>
+                </div>
+                <div class="list-item" onclick="showSectionContent('calendario')">
+                    <div class="item-content">
+                        <span class="item-text">Calendário</span>
+                    </div>
+                    <span class="item-arrow">›</span>
+                </div>
+                <div class="list-item" onclick="showSectionContent('financeiro')">
+                    <div class="item-content">
+                        <span class="item-text">Financeiro</span>
+                    </div>
+                    <span class="item-arrow">›</span>
+                </div>
+                <div class="list-item" onclick="openCard()">
+                    <div class="item-content">
+                        <span class="item-text">Carteirinha de Estudante</span>
+                    </div>
+                    <span class="item-arrow">›</span>
+                </div>
+            </div>
+            <button onclick="logout()" class="btn-logout">Sair do Portal</button>
+        </div>
+    </main>
+
+    <!-- Content Overlay -->
+    <div class="system-overlay" id="systemOverlay">
+        <div class="overlay-content">
+            <header class="overlay-header">
+                <img src="https://www.mackenzie.br/fileadmin/CONFIGURACOES/DEFAULT_21/Resources/Public/Template/img/logo/universidade_mack_v2.svg"
+                    alt="Logo Mackenzie" class="overlay-logo">
+            </header>
+            <div id="loader" class="spinner"></div>
+            <div id="sectionContentArea" class="section-content-area"></div>
+            <button onclick="closeSystemOverlay()" id="btnBack" class="btn-login" style="margin-top: 20px;">Voltar</button>
+        </div>
+    </div>
+
+    <!-- Student ID Card Overlay -->
+    <div class="id-card-overlay" id="idCardOverlay">
+        <div class="id-card">
+            <div class="id-card-header">
+                <h3>Identidade Estudantil</h3>
+            </div>
+            <div class="id-card-body">
+                <div class="student-photo" id="studentPhoto">
+                    <img src="student.jpg" alt="Foto do Estudante">
+                </div>
+                <div class="student-info">
+                    <div class="info-row">
+                        <div class="info-label">Nome Completo</div>
+                        <div class="info-value">Enzo Emanuel Brazolin</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">CPF</div>
+                        <div class="info-value" id="displayTIA">407.910.048-56</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Curso</div>
+                        <div class="info-value">JORNALISMO</div>
+                    </div>
+
+                    <!-- Campos Extras (Escondidos por padrão) -->
+                    <div id="extraDetails" style="display: none;">
+                        <div class="info-row">
+                            <div class="info-label">Polo</div>
+                            <div class="info-value">CAMPUS HIGIENÓPOLIS</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Período</div>
+                            <div class="info-value">EAD 4º SEMESTRE</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Válido até</div>
+                            <div class="info-value">30/06/2026</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="toggleDetails()" id="btnDetails"
+                    style="background: none; border: none; color: var(--primary-color); font-size: 0.8rem; font-weight: 700; cursor: pointer; margin-top: 10px;">
+                    ▼ EXPANDIR DETALHES
+                </button>
+
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TIA32145678" alt="QR Code"
+                        style="width: 100%; height: 100%;">
+                </div>
+            </div>
+            <div class="id-card-footer">
+                INSTITUTO PRESBITERIANO MACKENZIE
+            </div>
+            <button onclick="closeCard()"
+                style="width: 100%; padding: 12px; border: none; background: #f5f5f5; cursor: pointer; font-weight: 600; color: #666; border-top: 1px solid #eee;">Fechar</button>
+        </div>
+    </div>
+
+    <footer class="about-section">
+        <div class="container">
+            <h3>Sobre</h3>
+            <p>Isso é apenas um projeto acadêmico que visa a criação de interfaces e sites dinâmicos com uso da inteligência artificial.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
